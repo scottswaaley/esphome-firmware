@@ -90,7 +90,7 @@ logger:
   level: VERBOSE
 
 dashboard_import:
-  package_import_url: github://esphome/firmware/wake-word-voice-assistant/esp32-s3-box.yaml@main
+  package_import_url: github://scottswaaley/esphome-firmware/wake-word-voice-assistant/esp32-s3-box.yaml
 
 wifi:
   ap:
