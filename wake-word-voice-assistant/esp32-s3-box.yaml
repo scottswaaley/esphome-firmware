@@ -189,6 +189,7 @@ voice_assistant:
         id: text_response
         state: "..."
     - script.execute: draw_display
+    - script.execute: wakeword_acknowledge
   on_stt_vad_end:
     - lambda: id(voice_assistant_phase) = ${voice_assist_thinking_phase_id};
     - script.execute: draw_display
@@ -273,6 +274,10 @@ voice_assistant:
     - script.execute: draw_display
 
 script:
+  - id: wakeword_acknowledge
+    then:
+      - lambda: id(box_speaker).play(id(timer_finished_wave_file), sizeof(id(timer_finished_wave_file)));
+      - delay: 1s
   - id: draw_display
     then:
       - if:
