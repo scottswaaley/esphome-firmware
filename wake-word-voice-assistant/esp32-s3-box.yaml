@@ -87,6 +87,7 @@ ota:
 
 logger:
   hardware_uart: USB_SERIAL_JTAG
+  level: VERBOSE
 
 dashboard_import:
   package_import_url: github://esphome/firmware/wake-word-voice-assistant/esp32-s3-box.yaml@main
@@ -278,7 +279,8 @@ script:
     then:
       - lambda: id(box_speaker).play(id(timer_finished_wave_file), sizeof(id(timer_finished_wave_file)));
       - delay: 1s
-      - lambda: ESP_LOGD("voice_assistant", "wakeword_acknowledge script has completed");
+      - logger.log: "wakeword_acknowledge script has completed 2"
+      - lambda: ESP_LOGD("voice_assistant", "wakeword_acknowledge script has completed 3");
   - id: draw_display
     then:
       - if:
