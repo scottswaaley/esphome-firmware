@@ -278,6 +278,7 @@ script:
     then:
       - lambda: id(box_speaker).play(id(timer_finished_wave_file), sizeof(id(timer_finished_wave_file)));
       - delay: 1s
+      - lambda: ESP_LOGD(TAG, "wakeword_acknowledge script has completed");
   - id: draw_display
     then:
       - if:
