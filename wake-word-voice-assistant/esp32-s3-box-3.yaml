@@ -40,7 +40,7 @@ esphome:
     board_build.flash_mode: dio
   project:
     name: esphome.voice-assistant
-    version: "2.0"
+    version: "24.7.5.1"
   on_boot:
     priority: 600
     then:
@@ -90,6 +90,16 @@ api:
 ota:
   - platform: esphome
     id: ota_esphome
+  - platform: http_request
+    id: ota_http_request
+
+update:
+  - platform: http_request
+    id: update_http_request
+    name: Firmware
+    source: https://firmware.esphome.io/wake-word-voice-assistant/esp32-s3-box-3/manifest.json
+
+http_request:
 
 logger:
   hardware_uart: USB_SERIAL_JTAG
@@ -182,7 +192,6 @@ voice_assistant:
   id: va
   microphone: box_mic
   speaker: box_speaker
-  use_wake_word: true
   noise_suppression_level: 2
   auto_gain: 31dBFS
   volume_multiplier: 2.0
@@ -445,6 +454,7 @@ script:
                 condition:
                   lambda: return id(wake_word_engine_location).state == "On device";
                 then:
+                  - lambda: id(va).set_use_wake_word(false);
                   - micro_wake_word.start
             - lambda: id(voice_assistant_phase) = ${voice_assist_idle_phase_id};
           else:
@@ -501,6 +511,7 @@ switch:
                       condition:
                         lambda: return id(wake_word_engine_location).state == "On device";
                       then:
+                        - lambda: id(va).set_use_wake_word(false);
                         - micro_wake_word.start
             - script.execute: draw_display
     on_turn_on:
